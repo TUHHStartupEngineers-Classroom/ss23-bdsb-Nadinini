@@ -96,3 +96,6 @@ cars
 ```{r}
 plot(cars)
 ```
+
+library(readr)
+library(tidyverse)

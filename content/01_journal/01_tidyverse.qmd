@@ -1,12 +1,10 @@
 ---
 title: "Tidyverse"
+subtitle: "Data Science at TUHH"
 author: "Nadine Hartlef"
 ---
-# Business Case
-# Data Science at TUHH ------------------------------------------------------
-## SALES ANALYSIS First Part ----
 
-
+## SALES ANALYSIS First Part
 ```{r}
 # 1.0 Load libraries ----
 library(readr)
@@ -81,7 +79,7 @@ sales_by_loc_tbl %>%
     y = "Revenue"
   )
 ```
-## SALES ANALYSIS Second Part ----
+## SALES ANALYSIS Second Part
 ```{r}
 sales_by_loc_year_tbl <- bike_orderlines_wrangled_tbl %>%
 #select(order.date,total_price,state) %>%

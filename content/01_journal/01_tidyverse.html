@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.2.335">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Nadine Hartlef">
-
 <title>MyLabJournal - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
@@ -21,8 +18,70 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
-
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
@@ -43,7 +102,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script id="quarto-search-options" type="application/json">{
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -61,17 +122,13 @@ ul.task-list li input[type="checkbox"] {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
+}</script><link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">MyLabJournal</span>
@@ -82,7 +139,7 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -90,8 +147,8 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-journal" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Journal</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-journal">    
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-journal">
+<li>
     <a class="dropdown-item" href="../../content/01_journal/01_tidyverse.html">
  <span class="dropdown-text">01 Tidyverse</span></a>
   </li>  
@@ -108,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">04 Data Visualization</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../content/02_notes/05_class_notes.html">
  <span class="menu-text">Class notes</span></a>
@@ -118,35 +175,32 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Links</span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
+<div class="quarto-toggle-container">
                   <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
               </div>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-  <li><a href="#business-case" id="toc-business-case" class="nav-link active" data-scroll-target="#business-case"><span class="toc-section-number">1</span>  Business Case</a></li>
+<li><a href="#business-case" id="toc-business-case" class="nav-link active" data-scroll-target="#business-case"><span class="toc-section-number">1</span>  Business Case</a></li>
   <li><a href="#data-science-at-tuhh" id="toc-data-science-at-tuhh" class="nav-link" data-scroll-target="#data-science-at-tuhh"><span class="toc-section-number">2</span>  Data Science at TUHH ——————————————————</a></li>
   <li><a href="#sales-analysis--" id="toc-sales-analysis--" class="nav-link" data-scroll-target="#sales-analysis--"><span class="toc-section-number">3</span>  SALES ANALYSIS —-</a></li>
-  <li><a href="#load-libraries--" id="toc-load-libraries--" class="nav-link" data-scroll-target="#load-libraries--"><span class="toc-section-number">4</span>  1.0 Load libraries —-</a></li>
+  <li>
+<a href="#load-libraries--" id="toc-load-libraries--" class="nav-link" data-scroll-target="#load-libraries--"><span class="toc-section-number">4</span>  1.0 Load libraries —-</a>
+  <ul class="collapse">
+<li><a href="#second-part-sales-by-location-and-year" id="toc-second-part-sales-by-location-and-year" class="nav-link" data-scroll-target="#second-part-sales-by-location-and-year"><span class="toc-section-number">4.1</span>  Second Part, sales by location and year</a></li>
   </ul>
-</nav>
+</li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Tidyverse</h1>
 </div>
 
@@ -166,119 +220,172 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
-</header>
+</header><section id="business-case" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Business Case</h1>
+</section><section id="data-science-at-tuhh" class="level1" data-number="2"><h1 data-number="2">
+<span class="header-section-number">2</span> Data Science at TUHH ——————————————————</h1>
+</section><section id="sales-analysis--" class="level1" data-number="3"><h1 data-number="3">
+<span class="header-section-number">3</span> SALES ANALYSIS —-</h1>
+</section><section id="load-libraries--" class="level1" data-number="4"><h1 data-number="4">
+<span class="header-section-number">4</span> 1.0 Load libraries —-</h1>
+<div class="cell" data-hash="01_tidyverse_cache/html/unnamed-chunk-1_94b896a9be653d7a352a8901e9f61e76">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#&gt; ✔ dplyr     1.1.2     ✔ purrr     1.0.1
+#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.0
+#&gt; ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+#&gt; ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#&gt; ✖ dplyr::filter() masks stats::filter()
+#&gt; ✖ dplyr::lag()    masks stats::lag()
+#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(stats)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">library</span>(writexl)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">library</span>(lobstr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="01_tidyverse_cache/html/unnamed-chunk-2_ac57a2d078052d82d2f615f711ef0f25">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># 2.0 Importing Files ----</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>orderlines_tbl <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">nadin</span><span class="sc">\\</span><span class="st">Documents</span><span class="sc">\\</span><span class="st">GitHub</span><span class="sc">\\</span><span class="st">ss23-bdsb-Nadinini</span><span class="sc">\\</span><span class="st">01_bike_sales</span><span class="sc">\\</span><span class="st">01_raw_data</span><span class="sc">\\</span><span class="st">orderlines.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; New names:
+#&gt; • `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>bikes_tbl      <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">nadin</span><span class="sc">\\</span><span class="st">Documents</span><span class="sc">\\</span><span class="st">GitHub</span><span class="sc">\\</span><span class="st">ss23-bdsb-Nadinini</span><span class="sc">\\</span><span class="st">01_bike_sales</span><span class="sc">\\</span><span class="st">01_raw_data</span><span class="sc">\\</span><span class="st">bikes.xlsx"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>bikeshops_tbl  <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">nadin</span><span class="sc">\\</span><span class="st">Documents</span><span class="sc">\\</span><span class="st">GitHub</span><span class="sc">\\</span><span class="st">ss23-bdsb-Nadinini</span><span class="sc">\\</span><span class="st">01_bike_sales</span><span class="sc">\\</span><span class="st">01_raw_data</span><span class="sc">\\</span><span class="st">bikeshops.xlsx"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># 3.0 Examining Data ----</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#glimpse()</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># 4.0 Joining Data ----</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>bike_joined_tbl <span class="ot">&lt;-</span> orderlines_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">left_join</span>(bikes_tbl, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"product.id"</span> <span class="ot">=</span> <span class="st">"bike.id"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">left_join</span>(bikeshops_tbl, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"customer.id"</span> <span class="ot">=</span> <span class="st">"bikeshop.id"</span>))</span>
+<span id="cb6-11"><a href="#cb6-11"></a></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co"># 5.0 Wrangling Data and Writing File ----</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="do">## Challenge Sales by location</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  bike_orderlines_wrangled_tbl <span class="ot">&lt;-</span> bike_joined_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>  <span class="fu">separate</span>(<span class="at">col    =</span> category,</span>
+<span id="cb6-17"><a href="#cb6-17"></a>           <span class="at">into   =</span> <span class="fu">c</span>(<span class="st">"category.1"</span>,<span class="st">"category.2"</span>,<span class="st">"category.3"</span>),</span>
+<span id="cb6-18"><a href="#cb6-18"></a>           <span class="at">sep    =</span> <span class="st">" - "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>  <span class="fu">separate</span>(<span class="at">col    =</span> location,</span>
+<span id="cb6-20"><a href="#cb6-20"></a>           <span class="at">into   =</span> <span class="fu">c</span>(<span class="st">"city"</span>, <span class="st">"state"</span>),</span>
+<span id="cb6-21"><a href="#cb6-21"></a>           <span class="at">sep    =</span> <span class="st">", "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a>  <span class="fu">mutate</span>(<span class="at">total.price =</span> price <span class="sc">*</span> quantity) <span class="sc">%&gt;%</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a>  <span class="fu">select</span>(<span class="sc">-</span>...<span class="dv">1</span>, <span class="sc">-</span>gender) <span class="sc">%&gt;%</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">".id"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>  <span class="fu">bind_cols</span>(bike_joined_tbl <span class="sc">%&gt;%</span> <span class="fu">select</span>(order.id)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-26"><a href="#cb6-26"></a>  <span class="fu">select</span>(order.id, <span class="fu">contains</span>(<span class="st">"order"</span>), <span class="fu">contains</span>(<span class="st">"model"</span>), <span class="fu">contains</span>(<span class="st">"category"</span>),</span>
+<span id="cb6-27"><a href="#cb6-27"></a>         price, quantity, total.price,</span>
+<span id="cb6-28"><a href="#cb6-28"></a>         <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a>  <span class="fu">set_names</span>(<span class="fu">names</span>(.) <span class="sc">%&gt;%</span> <span class="fu">str_replace_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"_"</span>))</span>
+<span id="cb6-30"><a href="#cb6-30"></a></span>
+<span id="cb6-31"><a href="#cb6-31"></a></span>
+<span id="cb6-32"><a href="#cb6-32"></a>sales_by_loc_tbl <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a>  <span class="fu">select</span>(state, total_price) <span class="sc">%&gt;%</span></span>
+<span id="cb6-34"><a href="#cb6-34"></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-35"><a href="#cb6-35"></a>  <span class="fu">summarize</span>(<span class="at">sales =</span> <span class="fu">sum</span>(total_price)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-36"><a href="#cb6-36"></a>  <span class="fu">mutate</span>(<span class="at">sales_text =</span> scales<span class="sc">::</span><span class="fu">dollar</span>(sales, <span class="at">big.mark =</span> <span class="st">"."</span>, </span>
+<span id="cb6-37"><a href="#cb6-37"></a>                                     <span class="at">decimal.mark =</span> <span class="st">","</span>, </span>
+<span id="cb6-38"><a href="#cb6-38"></a>                                     <span class="at">prefix =</span> <span class="st">""</span>, </span>
+<span id="cb6-39"><a href="#cb6-39"></a>                                     <span class="at">suffix =</span> <span class="st">" €"</span>))</span>
+<span id="cb6-40"><a href="#cb6-40"></a></span>
+<span id="cb6-41"><a href="#cb6-41"></a>sales_by_loc_tbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-<section id="business-case" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Business Case</h1>
-</section>
-<section id="data-science-at-tuhh" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Data Science at TUHH ——————————————————</h1>
-</section>
-<section id="sales-analysis--" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> SALES ANALYSIS —-</h1>
-</section>
-<section id="load-libraries--" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> 1.0 Load libraries —-</h1>
-<p>library(readr) library(readxl) library(tidyverse) library(stats) library(writexl) library(lubridate) library(lobstr)</p>
-<pre><code># 2.0 Importing Files ----
-orderlines_tbl &lt;- read_excel("ss23-bdsb-Nadinini/content/01_bike_sales/01_raw_data/orderlines.xlsx")
-bikes_tbl      &lt;- read_excel("content/01_bike_sales/01_raw_data/bikes.xlsx")
-bikeshops_tbl  &lt;- read_excel("content/01_bike_sales/01_raw_data/bikeshops.xlsx")
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["state"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sales"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sales_text"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Baden-Württemberg","2":"6521090","3":"6.521.090 €"},{"1":"Bavaria","2":"6742819","3":"6.742.819 €"},{"1":"Berlin","2":"1128433","3":"1.128.433 €"},{"1":"Bremen","2":"10653499","3":"10.653.499 €"},{"1":"Hamburg","2":"3874756","3":"3.874.756 €"},{"1":"Hesse","2":"1558901","3":"1.558.901 €"},{"1":"Lower Saxony","2":"4107115","3":"4.107.115 €"},{"1":"Mecklenburg-Western Pomerania","2":"618974","3":"618.974 €"},{"1":"North Rhine-Westphalia","2":"21200613","3":"21.200.613 €"},{"1":"Saxony","2":"2230245","3":"2.230.245 €"},{"1":"Saxony-Anhalt","2":"569614","3":"569.614 €"},{"1":"Schleswig-Holstein","2":"3224749","3":"3.224.749 €"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#{r plot, fig.width=10, fig.height=7} # für markdown </span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>sales_by_loc_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> state, <span class="at">y =</span> sales)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#2DC6D6"</span>) <span class="sc">+</span> </span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> sales_text)) <span class="sc">+</span>  </span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>(<span class="at">big.mark =</span> <span class="st">"."</span>, </span>
+<span id="cb7-9"><a href="#cb7-9"></a>                                                    <span class="at">decimal.mark =</span> <span class="st">","</span>, </span>
+<span id="cb7-10"><a href="#cb7-10"></a>                                                    <span class="at">prefix =</span> <span class="st">""</span>, </span>
+<span id="cb7-11"><a href="#cb7-11"></a>                                                    <span class="at">suffix =</span> <span class="st">" €"</span>)) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-14"><a href="#cb7-14"></a>    <span class="at">title    =</span> <span class="st">"Sales by location"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15"></a>    <span class="at">subtitle =</span> <span class="st">"for states in Germany"</span>,</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="at">y =</span> <span class="st">"Revenue"</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; `geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="01_tidyverse_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="01_tidyverse_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="second-part-sales-by-location-and-year" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="second-part-sales-by-location-and-year">
+<span class="header-section-number">4.1</span> Second Part, sales by location and year</h2>
+<div class="cell" data-hash="01_tidyverse_cache/html/unnamed-chunk-3_ada943d34d29bf16ff5e6261e45df670">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>sales_by_loc_year_tbl <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#select(order.date,total_price,state) %&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">year</span>(order_date)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">group_by</span>(state, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">summarize</span>(<span class="at">sales =</span> <span class="fu">sum</span>(total_price)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>  <span class="fu">mutate</span>(<span class="at">sales_text =</span> scales<span class="sc">::</span><span class="fu">dollar</span>(sales, <span class="at">big.mark =</span> <span class="st">"."</span>, </span>
+<span id="cb9-8"><a href="#cb9-8"></a>                                     <span class="at">decimal.mark =</span> <span class="st">","</span>, </span>
+<span id="cb9-9"><a href="#cb9-9"></a>                                     <span class="at">prefix =</span> <span class="st">""</span>, </span>
+<span id="cb9-10"><a href="#cb9-10"></a>                                     <span class="at">suffix =</span> <span class="st">" €"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; `summarise()` has grouped output by 'state'. You can override using the
+#&gt; `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>sales_by_loc_year_tbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-# 3.0 Examining Data ----
-#glimpse()
-
-# 4.0 Joining Data ----
-bike_joined_tbl &lt;- orderlines_tbl %&gt;%
-  left_join(bikes_tbl, by = c("product.id" = "bike.id")) %&gt;%
-  left_join(bikeshops_tbl, by = c("customer.id" = "bikeshop.id"))
-
-# 5.0 Wrangling Data and Writing File ----
-
-## Challenge Sales by location
-  bike_orderlines_wrangled_tbl &lt;- bike_joined_tbl %&gt;%
-  separate(col    = category,
-           into   = c("category.1","category.2","category.3"),
-           sep    = " - ") %&gt;%
-  separate(col    = location,
-           into   = c("city", "state"),
-           sep    = ", ") %&gt;%
-  mutate(total.price = price * quantity) %&gt;%
-  select(-...1, -gender) %&gt;%
-  select(-ends_with(".id")) %&gt;%
-  bind_cols(bike_orderlines_joined_tbl %&gt;% select(order.id)) %&gt;% 
-  select(order.id, contains("order"), contains("model"), contains("category"),
-         price, quantity, total.price,
-         everything()) %&gt;%
-  set_names(names(.) %&gt;% str_replace_all("\\.", "_"))
-
-
-sales_by_loc_tbl &lt;- bike_orderlines_wrangled_tbl %&gt;%
-  select(state, total_price) %&gt;%
-  group_by(state) %&gt;% 
-  summarize(sales = sum(total_price)) %&gt;%
-  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
-                                     decimal.mark = ",", 
-                                     prefix = "", 
-                                     suffix = " €"))
-
-sales_by_loc_tbl
-
-#{r plot, fig.width=10, fig.height=7} # für markdown 
-
-sales_by_loc_tbl %&gt;%
-  ggplot(aes(x = state, y = sales)) +
-  geom_col(fill = "#2DC6D6") + 
-  geom_label(aes(label = sales_text)) +  
-  geom_smooth(method = "lm", se = FALSE) + 
-  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
-                                                    decimal.mark = ",", 
-                                                    prefix = "", 
-                                                    suffix = " €")) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(
-    title    = "Sales by location",
-    subtitle = "for states in Germany",
-    x = "",
-    y = "Revenue"
-  )
-
-## Second Part, sales by location and year
-sales_by_loc_year_tbl &lt;- bike_orderlines_wrangled_tbl
-select(order_date,total_price,state) %&gt;%
-  mutate(year=year(order_date)) %&gt;%
-  group_by(state, year) %&gt;% 
-  summarize(sales = sum(total_price)) %&gt;%
-  ungroup() %&gt;%
-  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
-                                     decimal.mark = ",", 
-                                     prefix = "", 
-                                     suffix = " €"))
-sales_by_loc_year_tbl
-
-sales_by_loc_year_tbl %&gt;%
-  ggplot(aes(x = state, y = sales, fill = location)) +
-  geom_col()
-facet_wrap(~ location)
-  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
-                                                    decimal.mark = ",", 
-                                                    prefix = "", 
-                                                    suffix = " €")) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(
-    title    = "Sales by location",
-    subtitle = "for states in Germany",
-   fill= "location"
-  )
-  
-bike_orderlines_wrangled_tbl %&gt;%
-    write_xlsx("content/01_bike_sales/bike_orderlines_wrangled.xlsx")</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["state"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sales"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sales_text"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"Baden-Württemberg","2":"2015","3":"1031924","4":"1.031.924 €"},{"1":"Baden-Württemberg","2":"2016","3":"1561658","4":"1.561.658 €"},{"1":"Baden-Württemberg","2":"2017","3":"1224152","4":"1.224.152 €"},{"1":"Baden-Württemberg","2":"2018","3":"1114327","4":"1.114.327 €"},{"1":"Baden-Württemberg","2":"2019","3":"1589029","4":"1.589.029 €"},{"1":"Bavaria","2":"2015","3":"1301461","4":"1.301.461 €"},{"1":"Bavaria","2":"2016","3":"1129852","4":"1.129.852 €"},{"1":"Bavaria","2":"2017","3":"1411851","4":"1.411.851 €"},{"1":"Bavaria","2":"2018","3":"1168783","4":"1.168.783 €"},{"1":"Bavaria","2":"2019","3":"1730872","4":"1.730.872 €"},{"1":"Berlin","2":"2015","3":"95853","4":"95.853 €"},{"1":"Berlin","2":"2016","3":"72361","4":"72.361 €"},{"1":"Berlin","2":"2017","3":"451293","4":"451.293 €"},{"1":"Berlin","2":"2018","3":"318974","4":"318.974 €"},{"1":"Berlin","2":"2019","3":"189952","4":"189.952 €"},{"1":"Bremen","2":"2015","3":"1395912","4":"1.395.912 €"},{"1":"Bremen","2":"2016","3":"2057760","4":"2.057.760 €"},{"1":"Bremen","2":"2017","3":"2557145","4":"2.557.145 €"},{"1":"Bremen","2":"2018","3":"1833844","4":"1.833.844 €"},{"1":"Bremen","2":"2019","3":"2808838","4":"2.808.838 €"},{"1":"Hamburg","2":"2015","3":"423090","4":"423.090 €"},{"1":"Hamburg","2":"2016","3":"636550","4":"636.550 €"},{"1":"Hamburg","2":"2017","3":"731678","4":"731.678 €"},{"1":"Hamburg","2":"2018","3":"930803","4":"930.803 €"},{"1":"Hamburg","2":"2019","3":"1152635","4":"1.152.635 €"},{"1":"Hesse","2":"2015","3":"308609","4":"308.609 €"},{"1":"Hesse","2":"2016","3":"225647","4":"225.647 €"},{"1":"Hesse","2":"2017","3":"338783","4":"338.783 €"},{"1":"Hesse","2":"2018","3":"330647","4":"330.647 €"},{"1":"Hesse","2":"2019","3":"355215","4":"355.215 €"},{"1":"Lower Saxony","2":"2015","3":"584386","4":"584.386 €"},{"1":"Lower Saxony","2":"2016","3":"639839","4":"639.839 €"},{"1":"Lower Saxony","2":"2017","3":"1055747","4":"1.055.747 €"},{"1":"Lower Saxony","2":"2018","3":"929624","4":"929.624 €"},{"1":"Lower Saxony","2":"2019","3":"897519","4":"897.519 €"},{"1":"Mecklenburg-Western Pomerania","2":"2015","3":"222003","4":"222.003 €"},{"1":"Mecklenburg-Western Pomerania","2":"2016","3":"75443","4":"75.443 €"},{"1":"Mecklenburg-Western Pomerania","2":"2017","3":"201218","4":"201.218 €"},{"1":"Mecklenburg-Western Pomerania","2":"2018","3":"21041","4":"21.041 €"},{"1":"Mecklenburg-Western Pomerania","2":"2019","3":"99269","4":"99.269 €"},{"1":"North Rhine-Westphalia","2":"2015","3":"3735092","4":"3.735.092 €"},{"1":"North Rhine-Westphalia","2":"2016","3":"3002792","4":"3.002.792 €"},{"1":"North Rhine-Westphalia","2":"2017","3":"4671541","4":"4.671.541 €"},{"1":"North Rhine-Westphalia","2":"2018","3":"4601681","4":"4.601.681 €"},{"1":"North Rhine-Westphalia","2":"2019","3":"5189507","4":"5.189.507 €"},{"1":"Saxony","2":"2015","3":"238371","4":"238.371 €"},{"1":"Saxony","2":"2016","3":"589994","4":"589.994 €"},{"1":"Saxony","2":"2017","3":"595378","4":"595.378 €"},{"1":"Saxony","2":"2018","3":"338344","4":"338.344 €"},{"1":"Saxony","2":"2019","3":"468158","4":"468.158 €"},{"1":"Saxony-Anhalt","2":"2015","3":"144737","4":"144.737 €"},{"1":"Saxony-Anhalt","2":"2016","3":"65901","4":"65.901 €"},{"1":"Saxony-Anhalt","2":"2017","3":"194509","4":"194.509 €"},{"1":"Saxony-Anhalt","2":"2018","3":"81163","4":"81.163 €"},{"1":"Saxony-Anhalt","2":"2019","3":"83304","4":"83.304 €"},{"1":"Schleswig-Holstein","2":"2015","3":"448844","4":"448.844 €"},{"1":"Schleswig-Holstein","2":"2016","3":"672710","4":"672.710 €"},{"1":"Schleswig-Holstein","2":"2017","3":"1076996","4":"1.076.996 €"},{"1":"Schleswig-Holstein","2":"2018","3":"572622","4":"572.622 €"},{"1":"Schleswig-Holstein","2":"2019","3":"453577","4":"453.577 €"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>sales_by_loc_year_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> sales, <span class="at">fill =</span> state))  <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>      <span class="fu">geom_col</span>()<span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>      <span class="fu">facet_wrap</span>(<span class="sc">~</span>state)<span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>(<span class="at">big.mark =</span> <span class="st">"."</span>, </span>
+<span id="cb12-6"><a href="#cb12-6"></a>                                                    <span class="at">decimal.mark =</span> <span class="st">","</span>, </span>
+<span id="cb12-7"><a href="#cb12-7"></a>                                                    <span class="at">prefix =</span> <span class="st">""</span>, </span>
+<span id="cb12-8"><a href="#cb12-8"></a>                                                    <span class="at">suffix =</span> <span class="st">" €"</span>)) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>  <span class="co">#theme(axis.text.x = element_text(angle = 45, hjust = 1)) +</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-11"><a href="#cb12-11"></a>    <span class="at">title    =</span> <span class="st">"Sales by location"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12"></a>    <span class="at">subtitle =</span> <span class="st">"for states in Germany"</span>,</span>
+<span id="cb12-13"><a href="#cb12-13"></a>   <span class="at">fill=</span> <span class="st">"location"</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="01_tidyverse_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="01_tidyverse_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">#bike_orderlines_wrangled_tbl %&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="co">#write_xlsx("content/01_bike_sales/bike_orderlines_wrangled.xlsx")</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co">#plot(sales_by_loc_year_tbl)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -527,7 +634,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
+<script>var lightboxQuarto = GLightbox({"loop":true,"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});</script>
 
 
 </body></html>

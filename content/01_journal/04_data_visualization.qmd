@@ -8,7 +8,9 @@ library(zoo)
 library(lubridate)
 library(maps)
 covid_data_tbl <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
-
+```
+# Time course of the cumulative Covid-19 cases
+```{r}
 #challenge part 1
 covid_data_pt1 <- tibble(location = covid_data_tbl$location,
                          date = covid_data_tbl$date,
@@ -30,7 +32,7 @@ label_dates <- covid_dates %>%
 covid_data_plot %>%
 ggplot(aes(date, total_cases)) +
 
-  geom_line(aes(color = location), size = 1) + 
+  geom_line(aes(color = location), linewidth = 1) + 
   labs(
     title = "COVID-19 confirmed cases worldwide",
     subtitle = str_glue("As of {mday(current_date)}/{month(current_date)}/{year(current_date)}"),
@@ -47,7 +49,9 @@ ggplot(aes(date, total_cases)) +
   theme(legend.position = "bottom",
         axis.text.x = element_text(angle = 45, hjust = 1)
   )
-
+```
+# The distribution of the mortality rate
+```{r}
 # Part 2 of the challenge
 world <- map_data("world")
 covid_data_world <- covid_data_tbl %>%

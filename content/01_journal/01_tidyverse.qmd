@@ -4,7 +4,7 @@ subtitle: "Data Science at TUHH"
 author: "Nadine Hartlef"
 ---
 
-## SALES ANALYSIS First Part
+## SALES ANALYSIS Preparation
 ```{r}
 # 1.0 Load libraries ----
 library(readr)
@@ -28,10 +28,11 @@ bikeshops_tbl  <- read_excel("C:\\Users\\nadin\\Documents\\GitHub\\ss23-bdsb-Nad
 bike_joined_tbl <- orderlines_tbl %>%
   left_join(bikes_tbl, by = c("product.id" = "bike.id")) %>%
   left_join(bikeshops_tbl, by = c("customer.id" = "bikeshop.id"))
-
+```
+## First Part: Sales by location
+```{r}
 # 5.0 Wrangling Data and Writing File ----
 
-## Challenge Sales by location
   bike_orderlines_wrangled_tbl <- bike_joined_tbl %>%
   separate(col    = category,
            into   = c("category.1","category.2","category.3"),
@@ -79,7 +80,7 @@ sales_by_loc_tbl %>%
     y = "Revenue"
   )
 ```
-## SALES ANALYSIS Second Part
+## Second Part: Location and year
 ```{r}
 sales_by_loc_year_tbl <- bike_orderlines_wrangled_tbl %>%
 #select(order.date,total_price,state) %>%

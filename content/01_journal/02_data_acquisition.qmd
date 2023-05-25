@@ -2,7 +2,7 @@
 title: "Data Acquisition"
 author: "Nadine Hartlef"
 ---
-
+# Libraries
 ```{r}
 library(tidyverse) # Main Package - Loads dplyr, purrr, etc.
 library(rvest)     # HTML Hacking & Web Scraping
@@ -14,7 +14,9 @@ library(furrr)
 library(httr)
 library(lubridate)
 library(ggplot2)
-
+```
+# Get started with some data
+```{r}
 get_fastest_racetime <- function(season){
 f1_season_data <- glue("http://ergast.com/api/f1/",season,".json") %>%GET()
 raw_f1_season_data <- f1_season_data %>% 
@@ -43,7 +45,9 @@ fastest_time <- list(
 seasons = c(2010:2020)
 laptimes <- map(seasons,get_fastest_racetime) %>% bind_rows()
 laptimes
-
+```
+# Visualization
+```{r}
 #convert to seconds for visualization
 laptimes_second <- laptimes$time %>% 
   hms()
@@ -61,10 +65,9 @@ laptimes %>%
     x = "Season",
     y = "Race Time in [s]"
   )
-
-
-
-
+```
+## Second part
+```{r}
 #second part
  url_rennrad <- "https://www.rosebikes.de/fahrr%C3%A4der/rennrad"
  html_rennrad <- read_html(url_rennrad)

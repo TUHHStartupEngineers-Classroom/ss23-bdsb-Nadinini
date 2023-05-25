@@ -2,11 +2,7 @@
 title: "Data Visualization"
 author: "Nadine Hartlef"
 ---
-
-::: callout-note
-You can delete everything in here and start fresh.
-:::
-
+```{r}
 library(tidyverse)
 library(zoo)
 library(lubridate)
@@ -106,3 +102,4 @@ positions <- data.frame(
                                                          suffix = "%"),
       low="tomato", high="red4", 
                            guide="colorbar",na.value="white")
+```

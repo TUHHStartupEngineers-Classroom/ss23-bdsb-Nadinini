@@ -3,10 +3,7 @@ title: "Data Wrangling"
 author: "Nadine Hartlef"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
-
+```{r}
 library(tidyverse)
 library(vroom)
 library(data.table)
@@ -18,7 +15,7 @@ col_types_patent <- list(
 )
 
 patent_tbl <- vroom(
-  file       = "03_scripts/patent.tsv", 
+  file       = "C:\\Users\\nadin\\Documents\\GitHub\\ss23-bdsb-Nadinini\\content\\01_journal\\Patent_data\\patent.tsv", 
   delim      = "\t", 
   col_names  = names(col_types_patent),
   col_types  = col_types_patent,
@@ -33,7 +30,7 @@ col_types_patent_assignee <- list(
 
 
 patent_assignee_tbl <- vroom(
-  file       = "03_scripts/patent_assignee.tsv", 
+  file       = "C:\\Users\\nadin\\Documents\\GitHub\\ss23-bdsb-Nadinini\\content\\01_journal\\Patent_data\\patent_assignee.tsv", 
   delim      = "\t", 
   col_names  = names(col_types_patent_assignee),
   col_types  = col_types_patent_assignee,
@@ -49,7 +46,7 @@ col_types_assignee <- list(
 
 
 assignee_tbl <- vroom(
-  file       = "03_scripts/assignee.tsv", 
+  file       = "C:\\Users\\nadin\\Documents\\GitHub\\ss23-bdsb-Nadinini\\content\\01_journal\\Patent_data\\assignee.tsv", 
   delim      = "\t", 
   col_names  = names(col_types_assignee),
   col_types  = col_types_assignee,
@@ -65,7 +62,7 @@ col_types_uspc <- list(
 
 
 uspc_tbl <- vroom(
-  file       = "03_scripts/uspc.tsv", 
+  file       = "C:\\Users\\nadin\\Documents\\GitHub\\ss23-bdsb-Nadinini\\content\\01_journal\\Patent_data\\uspc.tsv", 
   delim      = "\t", 
   col_names  = names(col_types_uspc),
   col_types  = col_types_uspc,
@@ -143,3 +140,4 @@ tech_classes <- data_pt3_joined %>%
   .[order(patents,decreasing = TRUE )] 
 # Top 5 tech main classes:
 print(tech_classes[1:5])
+```

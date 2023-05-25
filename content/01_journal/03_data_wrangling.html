@@ -131,7 +131,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#part-2-of-the-challenge" id="toc-part-2-of-the-challenge" class="nav-link active" data-scroll-target="#part-2-of-the-challenge"><span class="toc-section-number">1</span>  part 2 of the challenge</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -172,8 +178,36 @@ Note
 <p>You can delete everything in here and start fresh.</p>
 </div>
 </div>
+<p>library(tidyverse) library(vroom) library(data.table)</p>
+<p>col_types_patent &lt;- list( id = col_character(), date = col_date(“%Y-%m-%d”), num_claims = col_double() )</p>
+<p>patent_tbl &lt;- vroom( file = “03_scripts/patent.tsv”, delim = “, col_names = names(col_types_patent), col_types = col_types_patent, na = c(”“,”NA”, “NULL”) ) %&gt;% slice(2:nrow(.))</p>
+<p>col_types_patent_assignee &lt;- list( patent_id = col_character(), assignee_id = col_character() )</p>
+<p>patent_assignee_tbl &lt;- vroom( file = “03_scripts/patent_assignee.tsv”, delim = “, col_names = names(col_types_patent_assignee), col_types = col_types_patent_assignee, na = c(”“,”NA”, “NULL”) ) %&gt;% slice(2:nrow(.))</p>
+<p>col_types_assignee &lt;- list( id = col_character(), type = col_integer(), organization = col_character() )</p>
+<p>assignee_tbl &lt;- vroom( file = “03_scripts/assignee.tsv”, delim = “, col_names = names(col_types_assignee), col_types = col_types_assignee, na = c(”“,”NA”, “NULL”) )%&gt;% slice(2:nrow(.))</p>
+<p>col_types_uspc &lt;- list( patent_id = col_character(), mainclass_id = col_integer(), sequence = col_integer() )</p>
+<p>uspc_tbl &lt;- vroom( file = “03_scripts/uspc.tsv”, delim = “, col_names = names(col_types_uspc), col_types = col_types_uspc, na = c(”“,”NA”, “NULL”) )%&gt;% slice(2:nrow(.))</p>
+<p>#part 1 of the challenge</p>
+<p>data_pt1_joined &lt;- left_join(assignee_tbl,patent_assignee_tbl,by = c(“id”=“assignee_id”))</p>
+<p>data_pt1_US &lt;- data_pt1_joined %&gt;% data.table() %&gt;% .[type == 2] patent_numbers &lt;- data_pt1_US[,.N,by = list(id,organization)][ ,.(organization,id,patents = N)][ order(patents,decreasing = TRUE )]</p>
+<p>cat(“Company/Organization with the most patents:”,patent_numbers[ 1,organization],“with”,patent_numbers[1,patents],“patents” )</p>
+<p>#10 US Companies with the most assigned/granted patents print(patent_numbers[1:10,list(organization,patents),])</p>
+<section id="part-2-of-the-challenge" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> part 2 of the challenge</h1>
+<p>data_pt2_joined &lt;- left_join(data_pt1_joined,patent_tbl,by = c(“patent_id”=“id”)) # since patent_tbl contains patent ids, that have no assigned organization or matching # assignee id in the patent_assignee list and we search for organizations, left_join() # is performed in this order, so the result only contains patent ids that are assigned to # an organization</p>
+<p>data_pt2_august_US &lt;-data_pt2_joined %&gt;% data.table() %&gt;% .[type == 2 &amp; month(date)==8]</p>
+<p>patent_numbers_august &lt;- data_pt2_august_US[,.N,by = list(id,organization)][ ,.(organization,id,patents = N)][ order(patents,decreasing = TRUE )]</p>
+<p>cat(“Company/Organization with the most patents in August 2014:”,patent_numbers_august[ 1,organization],“with”,patent_numbers_august[1,patents],“patents” )</p>
+<p>#10 US Companies with the most assigned/granted patents in August 2014: print(patent_numbers_august[1:10,list(organization,patents),])</p>
+<p>#part 3 of the challenge uspc_data_tbl &lt;-uspc_tbl %&gt;% select(patent_id,mainclass_id) %&gt;% unique() %&gt;% data.table()</p>
+<p>data_pt3_joined &lt;- left_join(uspc_data_tbl,data_pt1_joined, by = c(“patent_id”=“patent_id”))%&gt;% .[!is.na(organization)] #take all assigned patents regarding tech classes and subtract the ones that cannot # be evaluated since no organization is assigned to them</p>
+<p>data_pt3_world &lt;- data_pt1_joined %&gt;% data.table() %&gt;% .[type == 2| type == 3]</p>
+<p>patent_numbers_world &lt;- data_pt3_world[,.N,by = list(id,organization)][ ,.(organization,id,patents = N)][ order(patents,decreasing = TRUE )]</p>
+<p>top_10_organizations &lt;-patent_numbers_world[1:10,list(organization),]</p>
+<p>tech_classes &lt;- data_pt3_joined %&gt;% filter(organization %in% top_10_organizations$organization) %&gt;% .[,.N,by = (mainclass_id)] %&gt;% .[,.(mainclass_id,patents = N)] %&gt;% .[order(patents,decreasing = TRUE )] # Top 5 tech main classes: print(tech_classes[1:5])</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

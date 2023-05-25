@@ -3,3 +3,114 @@ title: "Tidyverse"
 author: "Nadine Hartlef"
 ---
 # Business Case
+# Data Science at TUHH ------------------------------------------------------
+# SALES ANALYSIS ----
+
+# 1.0 Load libraries ----
+```{r}
+library(readr)
+library(readxl)
+library(tidyverse)
+library(stats)
+library(writexl)
+library(lubridate)
+library(lobstr)
+```
+```{r}
+# 2.0 Importing Files ----
+orderlines_tbl <- read_excel("C:/Users/nadin/Documents/GitHub/ds_basics-Nadinini/content/01_bike_sales/01_raw_data/orderlines.xlsx")
+bikes_tbl      <- read_excel("content/01_bike_sales/01_raw_data/bikes.xlsx")
+bikeshops_tbl  <- read_excel("content/01_bike_sales/01_raw_data/bikeshops.xlsx")
+
+# 3.0 Examining Data ----
+#glimpse()
+
+# 4.0 Joining Data ----
+bike_joined_tbl <- orderlines_tbl %>%
+  left_join(bikes_tbl, by = c("product.id" = "bike.id")) %>%
+  left_join(bikeshops_tbl, by = c("customer.id" = "bikeshop.id"))
+
+# 5.0 Wrangling Data and Writing File ----
+
+## Challenge Sales by location
+  bike_orderlines_wrangled_tbl <- bike_joined_tbl %>%
+  separate(col    = category,
+           into   = c("category.1","category.2","category.3"),
+           sep    = " - ") %>%
+  separate(col    = location,
+           into   = c("city", "state"),
+           sep    = ", ") %>%
+  mutate(total.price = price * quantity) %>%
+  select(-...1, -gender) %>%
+  select(-ends_with(".id")) %>%
+  bind_cols(bike_orderlines_joined_tbl %>% select(order.id)) %>% 
+  select(order.id, contains("order"), contains("model"), contains("category"),
+         price, quantity, total.price,
+         everything()) %>%
+  set_names(names(.) %>% str_replace_all("\\.", "_"))
+
+
+sales_by_loc_tbl <- bike_orderlines_wrangled_tbl %>%
+  select(state, total_price) %>%
+  group_by(state) %>% 
+  summarize(sales = sum(total_price)) %>%
+  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
+                                     decimal.mark = ",", 
+                                     prefix = "", 
+                                     suffix = " €"))
+
+sales_by_loc_tbl
+
+#{r plot, fig.width=10, fig.height=7} # für markdown 
+
+sales_by_loc_tbl %>%
+  ggplot(aes(x = state, y = sales)) +
+  geom_col(fill = "#2DC6D6") + 
+  geom_label(aes(label = sales_text)) +  
+  geom_smooth(method = "lm", se = FALSE) + 
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(
+    title    = "Sales by location",
+    subtitle = "for states in Germany",
+    x = "",
+    y = "Revenue"
+  )
+```
+## Second Part, sales by location and year
+```{r}
+sales_by_loc_year_tbl <- bike_orderlines_wrangled_tbl
+select(order_date,total_price,state) %>%
+  mutate(year=year(order_date)) %>%
+  group_by(state, year) %>% 
+  summarize(sales = sum(total_price)) %>%
+  ungroup() %>%
+  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
+                                     decimal.mark = ",", 
+                                     prefix = "", 
+                                     suffix = " €"))
+sales_by_loc_year_tbl
+
+sales_by_loc_year_tbl %>%
+  ggplot(aes(x = state, y = sales, fill = location)) +
+  geom_col()
+facet_wrap(~ location)
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
+                                                    decimal.mark = ",", 
+                                                    prefix = "", 
+                                                    suffix = " €")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(
+    title    = "Sales by location",
+    subtitle = "for states in Germany",
+   fill= "location"
+  )
+  
+bike_orderlines_wrangled_tbl %>%
+    write_xlsx("content/01_bike_sales/bike_orderlines_wrangled.xlsx")
+
+#plot(sales_by_loc_year_tbl)
+```

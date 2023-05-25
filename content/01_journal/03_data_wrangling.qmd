@@ -1,8 +1,145 @@
 ---
 title: "Data Wrangling"
-author: "Joschka Schwarz"
+author: "Nadine Hartlef"
 ---
 
 ::: callout-note
 You can delete everything in here and start fresh.
 :::
+
+library(tidyverse)
+library(vroom)
+library(data.table)
+
+col_types_patent <- list(
+  id = col_character(),
+  date = col_date("%Y-%m-%d"),
+  num_claims = col_double()
+)
+
+patent_tbl <- vroom(
+  file       = "03_scripts/patent.tsv", 
+  delim      = "\t", 
+  col_names  = names(col_types_patent),
+  col_types  = col_types_patent,
+  na         = c("", "NA", "NULL")
+) %>%
+  slice(2:nrow(.))
+
+col_types_patent_assignee <- list(
+  patent_id = col_character(),
+  assignee_id = col_character()
+)
+
+
+patent_assignee_tbl <- vroom(
+  file       = "03_scripts/patent_assignee.tsv", 
+  delim      = "\t", 
+  col_names  = names(col_types_patent_assignee),
+  col_types  = col_types_patent_assignee,
+  na         = c("", "NA", "NULL")
+) %>%
+  slice(2:nrow(.))
+
+col_types_assignee <- list(
+  id = col_character(),
+  type = col_integer(),
+  organization = col_character()
+)
+
+
+assignee_tbl <- vroom(
+  file       = "03_scripts/assignee.tsv", 
+  delim      = "\t", 
+  col_names  = names(col_types_assignee),
+  col_types  = col_types_assignee,
+  na         = c("", "NA", "NULL")
+)%>%
+  slice(2:nrow(.))
+
+col_types_uspc <- list(
+  patent_id = col_character(),
+  mainclass_id = col_integer(),
+  sequence = col_integer()
+)
+
+
+uspc_tbl <- vroom(
+  file       = "03_scripts/uspc.tsv", 
+  delim      = "\t", 
+  col_names  = names(col_types_uspc),
+  col_types  = col_types_uspc,
+  na         = c("", "NA", "NULL")
+)%>%
+  slice(2:nrow(.))
+
+#part 1 of the challenge
+
+data_pt1_joined <- left_join(assignee_tbl,patent_assignee_tbl,by = c("id"="assignee_id"))
+
+data_pt1_US <- data_pt1_joined %>%
+  data.table() %>%
+  .[type == 2]
+patent_numbers <- data_pt1_US[,.N,by = list(id,organization)][
+  ,.(organization,id,patents = N)][
+  order(patents,decreasing = TRUE )]
+
+cat("Company/Organization with the most patents: ",patent_numbers[
+  1,organization],"with ",patent_numbers[1,patents],"patents" )
+
+#10 US Companies with the most assigned/granted patents
+print(patent_numbers[1:10,list(organization,patents),])
+
+
+# part 2 of the challenge
+
+data_pt2_joined <- left_join(data_pt1_joined,patent_tbl,by = c("patent_id"="id"))
+# since patent_tbl contains patent ids, that have no assigned organization or matching
+# assignee id in the patent_assignee list and we search for organizations, left_join()
+# is performed in this order, so the result only contains patent ids that are assigned to 
+# an organization
+
+data_pt2_august_US <-data_pt2_joined %>%
+  data.table() %>%
+  .[type == 2 & month(date)==8]
+
+patent_numbers_august <- data_pt2_august_US[,.N,by = list(id,organization)][
+  ,.(organization,id,patents = N)][
+    order(patents,decreasing = TRUE )]
+
+cat("Company/Organization with the most patents in August 2014: ",patent_numbers_august[
+  1,organization],"with ",patent_numbers_august[1,patents],"patents" )
+
+#10 US Companies with the most assigned/granted patents in August 2014:
+print(patent_numbers_august[1:10,list(organization,patents),])
+
+
+
+#part 3 of the challenge
+uspc_data_tbl <-uspc_tbl %>% select(patent_id,mainclass_id) %>%
+  unique() %>% data.table()
+
+data_pt3_joined <- left_join(uspc_data_tbl,data_pt1_joined,
+                             by = c("patent_id"="patent_id"))%>%
+      .[!is.na(organization)]
+   #take all assigned patents regarding tech classes and subtract the ones that cannot
+  # be evaluated since no organization is assigned to them
+
+
+data_pt3_world <- data_pt1_joined %>%
+  data.table() %>%
+  .[type == 2| type == 3]
+
+patent_numbers_world <- data_pt3_world[,.N,by = list(id,organization)][
+  ,.(organization,id,patents = N)][
+    order(patents,decreasing = TRUE )]
+
+top_10_organizations <-patent_numbers_world[1:10,list(organization),]
+
+tech_classes <- data_pt3_joined %>% 
+  filter(organization %in% top_10_organizations$organization) %>%
+  .[,.N,by = (mainclass_id)] %>%
+  .[,.(mainclass_id,patents = N)] %>%
+  .[order(patents,decreasing = TRUE )] 
+# Top 5 tech main classes:
+print(tech_classes[1:5])

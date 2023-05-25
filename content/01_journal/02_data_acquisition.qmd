@@ -1,8 +1,109 @@
 ---
 title: "Data Acquisition"
-author: "Joschka Schwarz"
+author: "Nadine Hartlef"
 ---
 
 ::: callout-note
 You can delete everything in here and start fresh.
 :::
+library(tidyverse) # Main Package - Loads dplyr, purrr, etc.
+library(rvest)     # HTML Hacking & Web Scraping
+library(xopen)     # Quickly opening URLs
+library(jsonlite)  # converts JSON files to R objects
+library(glue)      # concatenate strings
+library(stringi)   # character string/text processing
+library(furrr)
+library(httr)
+library(lubridate)
+library(ggplot2)
+
+get_fastest_racetime <- function(season){
+f1_season_data <- glue("http://ergast.com/api/f1/",season,".json") %>%GET()
+raw_f1_season_data <- f1_season_data %>% 
+  .$content %>% 
+  rawToChar()%>% 
+  fromJSON()
+
+# determine the number of the race which was on Circuit de Spa-Francorchamps in that season
+circuit_names <- raw_f1_season_data %>% 
+  purrr:::pluck("MRData","RaceTable","Races","Circuit","circuitName") %>%
+  enframe() %>%
+  rename(race_num = name) %>% rename(track = value)
+  track_index <- filter(circuit_names,track == 'Circuit de Spa-Francorchamps') %>%.$race_num
+
+
+#get data from the specific race and determine fastest time
+f1_race_data <- glue("http://ergast.com/api/f1/",season,"/",track_index,"/results.json") %>% GET()
+raw_f1_race_data <- f1_race_data %>% .$content %>% rawToChar()%>% fromJSON()
+fastest_time <- raw_f1_race_data %>% purrr:::pluck("MRData","RaceTable","Races","Results",1,"Time","time",1)
+fastest_time <- list(
+  season = as.character(season),
+  time = fastest_time
+     )
+}
+
+seasons = c(2010:2020)
+laptimes <- map(seasons,get_fastest_racetime) %>% bind_rows()
+laptimes
+
+#convert to seconds for visualization
+laptimes_second <- laptimes$time %>% 
+  hms()
+laptimes_second <- hour(laptimes_second)*3600 + minute(laptimes_second)*60 + second(laptimes_second)
+laptimes = mutate(laptimes, time_seconds = laptimes_second)
+
+#Visualization
+laptimes %>%
+  ggplot(aes(x = season, y = time_seconds)) +
+  geom_col() + 
+  scale_y_continuous() +
+  labs(
+    title    = "Total Race Time in F1",
+    subtitle = "Track: Circuit de Spa-Francorchamps",
+    x = "Season",
+    y = "Race Time in [s]"
+  )
+
+
+
+
+#second part
+ url_rennrad <- "https://www.rosebikes.de/fahrr%C3%A4der/rennrad"
+ html_rennrad <- read_html(url_rennrad)
+ bike_model_urls <- html_rennrad %>%
+   html_nodes(css = '.catalog-category-bikes__list-item') %>%
+   html_nodes(css = '.row.align-middle > a') %>%
+   html_attr('href') %>%
+   enframe( value = "subdirectory") %>%
+   mutate(url = glue("https://www.rosebikes.de{subdirectory}")) %>%
+   transmute(url = as.character(url)) %>%
+   select(url) 
+ 
+ get_model_name <- function(bike_model_url){
+  html_model <- read_html(bike_model_url)
+  bike_model_names <- html_model %>%
+   html_nodes(css = '.catalog-category-model__title') %>%
+   html_text() %>%
+   stringr::str_extract("(?<=\\n).+(?=\\n)") %>%
+    as_tibble() 
+ }
+ 
+ get_model_price <- function(bike_model_url){
+  html_model <- read_html(bike_model_url)
+  bike_model_price <- html_model%>%
+   html_nodes(css = '.product-tile-price__current-value.catalog-category-model__price-current-value') %>%
+   html_text() %>%
+   stringr::str_extract("(?<=\\n).+(?=\\n)")%>%
+    as_tibble()
+ }
+ model_names <- map(bike_model_urls$url,get_model_name) %>% 
+   bind_rows() %>% 
+   transmute(model = value)
+ model_prices <- map(bike_model_urls$url,get_model_price) %>%
+   bind_rows() %>% 
+   transmute(price = value)
+ 
+ bike_modelbase <- bind_cols(model_names,model_prices)
+ 
+ #Bikes in category "Rennrad"
+ print(bike_modelbase)
